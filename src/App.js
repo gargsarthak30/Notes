@@ -28,7 +28,7 @@ getPinnedNotes = ()=>{
   const notesFromStorage = localStorage.getItem('pinnedNotes');
     if(notesFromStorage !== null)
     {
-      notes = notesFromStorage.split(',');
+      notes = JSON.parse(notesFromStorage);
     }
     return notes;
 }
@@ -42,7 +42,19 @@ handleSave = (newNote, id) => {
 }
 
 handlePin = (noteId) => {
-  console.log('clicked: ', noteId);
+  let pinnedNotes = this.state.pinnedNotes;
+
+  let oldList = this.state.allNotes;
+  let newList = [];
+
+  oldList.forEach(element => {
+      newList.push(JSON.parse(element));
+  });
+  
+  let pinnedNote = newList.filter(x=>x.key === noteId)[0];
+ 
+  pinnedNotes.push(JSON.stringify(pinnedNote));
+  this.setState({pinnedNotes: pinnedNotes});
 }
 
 componentDidUpdate = () => {
@@ -50,7 +62,7 @@ componentDidUpdate = () => {
   const pinnedNotes = this.state.pinnedNotes;
   
   localStorage.setItem('allNotes', JSON.stringify(allNotes));
-  localStorage.setItem('pinnedNotes', pinnedNotes);
+  localStorage.setItem('pinnedNotes', JSON.stringify(pinnedNotes));
 }
 
   render() { 
