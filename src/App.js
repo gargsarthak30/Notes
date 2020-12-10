@@ -41,6 +41,31 @@ handleSave = (newNote, id) => {
   this.setState({allNotes: allNotesNewList});
 }
 
+handleUnPin = (noteId)=>{
+  let allNotes = this.state.allNotes;
+
+  let oldList = this.state.pinnedNotes;
+  let newList = [];
+
+  oldList.forEach(element => {
+      newList.push(JSON.parse(element));
+  });
+  
+  let note = newList.filter(x=>x.key === noteId)[0];
+  let pinnedNotes = newList.filter(x=>x.key !== noteId);
+  
+  const newPinnedlNotesList = [];
+  
+  pinnedNotes.forEach(element => {
+    newPinnedlNotesList.push(JSON.stringify(element));
+  })
+
+  allNotes.push(JSON.stringify(note));
+
+  this.setState({pinnedNotes: newPinnedlNotesList});
+  this.setState({allNotes: allNotes});
+}
+
 handlePin = (noteId) => {
   let pinnedNotes = this.state.pinnedNotes;
 
@@ -52,9 +77,18 @@ handlePin = (noteId) => {
   });
   
   let pinnedNote = newList.filter(x=>x.key === noteId)[0];
- 
+  let unpinnedNotes = newList.filter(x=>x.key !== noteId);
+  
+  const newAllNotesList = [];
+  
+  unpinnedNotes.forEach(element => {
+    newAllNotesList.push(JSON.stringify(element));
+  })
+
   pinnedNotes.push(JSON.stringify(pinnedNote));
+
   this.setState({pinnedNotes: pinnedNotes});
+  this.setState({allNotes: newAllNotesList});
 }
 
 componentDidUpdate = () => {
@@ -71,7 +105,7 @@ componentDidUpdate = () => {
           <nav className="navbar navbar-light bg-dark">
             <span className="navbar-brand mb-0 h1" style={{color: "white"}}><i>Notes</i></span>
           </nav>
-            <Main pinnedNotes = {this.state.pinnedNotes} allNotes = {this.state.allNotes} onSave = {this.handleSave} onPin = {this.handlePin}/>
+            <Main pinnedNotes = {this.state.pinnedNotes} allNotes = {this.state.allNotes} onSave = {this.handleSave} onPin = {this.handlePin} onUnPin = {this.handleUnPin}/>
           
       </React.Fragment>
      );

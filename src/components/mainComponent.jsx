@@ -15,7 +15,7 @@ class Main extends Component {
                 </div>
     
                 <div className = "col-sm m-2">
-                  <PinnedNotes notes = {this.props.pinnedNotes} />
+                  <PinnedNotes notes = {this.props.pinnedNotes} onUnPin = {this.props.onUnPin}/>
                   <hr />
                   <AllNotes notes = {this.props.allNotes} onPin = {this.props.onPin}/>
                 </div>
