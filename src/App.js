@@ -66,6 +66,47 @@ handleUnPin = (noteId)=>{
   this.setState({allNotes: allNotes});
 }
 
+handleDelete = (noteId, type) =>{
+  //pinnedNotes
+  if(type === 'p')
+  {
+      const oldPinnedNotes = this.state.pinnedNotes;
+      let newPinnedNotes = [];
+
+      oldPinnedNotes.forEach(element => {
+        newPinnedNotes.push(JSON.parse(element));
+      });
+
+      const listToReturn = newPinnedNotes.filter(x=>x.key !== noteId);
+      let output = [];
+
+      listToReturn.forEach(element => {
+        output.push(JSON.stringify(element));
+      });
+
+      this.setState({pinnedNotes: output});
+}
+  else //allNotes
+  {
+    const oldAllNotes = this.state.allNotes;
+    let newAllNotes = [];
+
+    oldAllNotes.forEach(element => {
+      newAllNotes.push(JSON.parse(element));
+    });
+
+    const listToReturn = newAllNotes.filter(x=>x.key !== noteId);
+    let output = [];
+
+    listToReturn.forEach(element => {
+      output.push(JSON.stringify(element));
+    });
+
+    this.setState({allNotes: output});
+  }
+  
+}
+
 handlePin = (noteId) => {
   let pinnedNotes = this.state.pinnedNotes;
 
@@ -105,7 +146,13 @@ componentDidUpdate = () => {
           <nav className="navbar navbar-light bg-dark">
             <span className="navbar-brand mb-0 h1" style={{color: "white"}}><i>Notes</i></span>
           </nav>
-            <Main pinnedNotes = {this.state.pinnedNotes} allNotes = {this.state.allNotes} onSave = {this.handleSave} onPin = {this.handlePin} onUnPin = {this.handleUnPin}/>
+            <Main pinnedNotes = {this.state.pinnedNotes} 
+            allNotes = {this.state.allNotes} 
+            onSave = {this.handleSave} 
+            onPin = {this.handlePin} 
+            onUnPin = {this.handleUnPin}
+            onDelete = {this.handleDelete}
+            />
           
       </React.Fragment>
      );

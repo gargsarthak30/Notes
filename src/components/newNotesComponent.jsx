@@ -12,7 +12,7 @@ class NewNotes extends Component {
     }
 
     handleNewNote = ()=>{
-        this.setState({showTextArea: true});
+        this.state.showTextArea === true ? this.setState({showTextArea: false}) : this.setState({showTextArea: true});
     }
 
     handleChange = (event)=>{
@@ -23,7 +23,6 @@ class NewNotes extends Component {
         this.setState({showTextArea: false});
         this.setState({newNoteValue: ""});
     }
-
 
     render() { 
         
