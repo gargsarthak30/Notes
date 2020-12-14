@@ -33,9 +33,9 @@ getPinnedNotes = ()=>{
     return notes;
 }
 
-handleSave = (newNote, id) => {
+handleSave = (newNoteTitle, newNoteDescription, id) => {
   let allNotesNewList = this.state.allNotes;
-  var newValue = {'value': newNote, 'key': id};
+  var newValue = {'title': newNoteTitle, 'description': newNoteDescription, 'key': id};
   allNotesNewList.push(JSON.stringify(newValue));
   
   this.setState({allNotes: allNotesNewList});
